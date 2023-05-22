@@ -2,3 +2,5 @@ fastapi
 sqlalchemy>=2.0.0
 uvicorn
 psycopg2-binary
+alembic
+watchfiles
