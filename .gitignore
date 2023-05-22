@@ -25,3 +25,4 @@ yarn-error.log*
 # API
 .venv
 api/__pycache__
+.idea
