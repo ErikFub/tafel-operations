@@ -1,9 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
+import Sidebar from './components/Sidebar';
+import Main from './components/Main';
+
 
 function App() {
   return (
-    <h1>Tafel Operations App</h1>
+    <div>
+      <Sidebar></Sidebar>
+      <Main>
+        <h1>Tafel Operations App</h1>
+      </Main>
+    </div>
   );
 }
 
