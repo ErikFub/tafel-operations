@@ -9,6 +9,10 @@ class AddressBase(BaseModel):
     country: str
 
 
+class AddressCreate(BaseModel):
+    pass
+
+
 class Address(AddressBase):
     id: int
 
@@ -19,11 +23,16 @@ class Address(AddressBase):
 class CustomerBase(BaseModel):
     first_name: str
     last_name: str
-    address: Address | None = None
+    address: AddressBase | None = None
+
+
+class CustomerCreate(CustomerBase):
+    pass
 
 
 class Customer(CustomerBase):
     id: int
+    address: Address | None
 
     class Config:
         orm_mode = True
@@ -31,11 +40,16 @@ class Customer(CustomerBase):
 
 class SupplierBase(BaseModel):
     name: str
-    address: Address | None = None
+    address: AddressBase | None = None
+
+
+class SupplierCreate(SupplierBase):
+    pass
 
 
 class Supplier(SupplierBase):
     id: int
+    address: Address | None
 
     class Config:
         orm_mode = True
