@@ -1,10 +1,17 @@
-# Build step #1: build the React front end
-FROM node:16-alpine as build-step
-WORKDIR /app
+# Pull the base image
+FROM node:16-alpine
+
+# Set the working directory
+WORKDIR /react-docker
+
+# Copy app dependencies to container
+COPY ./package*.json ./
+
+# Add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
-COPY ./package.json yarn.lock ./
-COPY ./src ./src
-COPY ./public ./public
-RUN yarn install
-RUN yarn build
-CMD ["yarn", "start"]
+
+# Install dependencies
+RUN npm install
+
+# Deploy app for local development
+CMD npm start --host 0.0.0.0 --port 3000 --disableHostCheck true
