@@ -16,8 +16,8 @@ class Address(Base):
     city: Mapped[str]
     country: Mapped[str]
 
-    customers: Mapped["Customer"] = relationship(back_populates='address')
-    suppliers: Mapped["Supplier"] = relationship(back_populates='address')
+    customers: Mapped[list["Customer"]] = relationship(back_populates='address')
+    suppliers: Mapped[list["Supplier"]] = relationship(back_populates='address')
 
 
 class Customer(Base):
