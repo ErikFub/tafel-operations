@@ -15,7 +15,7 @@ export default function Sidebar() {
                 <ul class="space-y-2 font-medium">
                     {navigation.map(([title, url]) => (
                     <li>
-                        <a href={url} className={"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700" + (url === window.location.pathname ? " font-bold" : "")}>
+                        <a id={title} href={url} className={"flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700" + (url === window.location.pathname ? " font-bold" : "")}>
                             <span class="ml-3">{title}</span>
                         </a>
                     </li>
