@@ -30,7 +30,7 @@ export default function CustomersPage() {
                 <Spinner />
             :
                 <>
-                    <ListHeader title={"customers"}/>
+                    <ListHeader title={"customers"} newButton />
                     <CustomerList customers={customers} setCustomers={setCustomers}/>
                 </>
             }
