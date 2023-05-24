@@ -1,10 +1,18 @@
 import Body from "../components/Body";
+import CustomerList from "../components/CustomerList"
 
 
 export default function CustomersPage() {
-  return (
+    let customers = [
+        {
+            "first_name": "Erik",
+            "last_name": "Fubel",
+            "id": 1
+        }
+    ]
+    return (
     <Body sidebar>
-        Customers Page
+        <CustomerList customers={customers}/>
     </Body>
-  );
+    );
 }
