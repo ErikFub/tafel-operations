@@ -31,8 +31,8 @@ export default function CustomersPage() {
             :
                 <>
                     <ListHeader title={"customers"}/>
-                    <CustomerList customers={customers}/>
-                    </>
+                    <CustomerList customers={customers} setCustomers={setCustomers}/>
+                </>
             }
         </Body>
     );
