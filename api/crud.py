@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import select
+from sqlalchemy import select, delete
 
 from . import models, schemas
 
@@ -29,6 +29,17 @@ def get_customer(db: Session, customer_id: int) -> models.Customer | None:
 
 def get_customers(db: Session) -> list[models.Customer]:
     return db.scalars(select(models.Customer)).all()
+
+
+def delete_customer(db: Session, customer_id: int):
+    db_customer = db.get(models.Customer, customer_id)
+    address_id = db_customer.address_id
+    db.delete(db_customer)
+    if address_id is not None:
+        db_address = db.get(models.Address, address_id)
+        if not db_address.suppliers and not len(db_address.customers) > 1:
+            db.delete(db_address)
+    db.commit()
 
 
 def create_supplier(db: Session, supplier: schemas.SupplierCreate) -> models.Supplier:

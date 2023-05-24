@@ -49,6 +49,14 @@ def read_customer(customer_id: int, db: Session = Depends(get_db)):
     return db_customer
 
 
+@app.delete("/api/customers/{customer_id}", status_code=204)
+def delete_customer(customer_id: int, db: Session = Depends(get_db)):
+    db_customer = crud.get_customer(db=db, customer_id=customer_id)
+    if db_customer is None:
+        raise HTTPException(status_code=404, detail="Customer not found")
+    crud.delete_customer(db=db, customer_id=customer_id)
+
+
 @app.post("/api/suppliers/", response_model=schemas.Supplier)
 def create_supplier(supplier: schemas.SupplierCreate, db: Session = Depends(get_db)):
     return crud.create_supplier(db=db, supplier=supplier)
