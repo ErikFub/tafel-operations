@@ -1,18 +1,18 @@
+import { useState } from 'react';
 import Body from "../components/Body";
 import CustomerList from "../components/CustomerList"
+import Spinner from '../components/Spinner';
 
 
 export default function CustomersPage() {
-    let customers = [
-        {
-            "first_name": "Erik",
-            "last_name": "Fubel",
-            "id": 1
-        }
-    ]
+    const [customers, setCustomers] = useState()
     return (
-    <Body sidebar>
-        <CustomerList customers={customers}/>
-    </Body>
+        <Body sidebar>
+            {customers === undefined ? 
+                <Spinner />
+            :
+                <CustomerList customers={customers}/>
+            }
+        </Body>
     );
 }
