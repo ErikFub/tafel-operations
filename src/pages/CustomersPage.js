@@ -3,6 +3,7 @@ import Body from "../components/Body";
 import CustomerList from "../components/CustomerList"
 import Spinner from '../components/Spinner';
 import { useTafelApi } from '../contexts/ApiProvider';
+import ListHeader from '../components/ListHeader';
 
 
 export default function CustomersPage() {
@@ -28,7 +29,10 @@ export default function CustomersPage() {
             {customers === undefined ? 
                 <Spinner />
             :
-                <CustomerList customers={customers}/>
+                <>
+                    <ListHeader title={"customers"}/>
+                    <CustomerList customers={customers}/>
+                    </>
             }
         </Body>
     );
