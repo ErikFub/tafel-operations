@@ -1,14 +1,10 @@
-import Sidebar from '../components/Sidebar';
-import Main from '../components/Main';
-import SidebarCollapsed from '../components/SidebarCollapsed';
+import Body from "../components/Body";
 
 
 export default function HomePage() {
   return (
-    <div>
-      <SidebarCollapsed />
-      <Sidebar />
-      <Main />
-    </div>
+    <Body sidebar>
+        Home Page
+    </Body>
   );
 }
