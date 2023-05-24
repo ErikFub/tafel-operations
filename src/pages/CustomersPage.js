@@ -27,7 +27,10 @@ export default function CustomersPage() {
     return (
         <Body sidebar>
             {customers === undefined ? 
-                <Spinner />
+                <>
+                    <ListHeader title={"customers"} />
+                    <Spinner />
+                </>
             :
                 <>
                     <ListHeader title={"customers"} newButton />
