@@ -11,9 +11,9 @@ export default function CustomersPage() {
 
     // Fetch customer data
     useEffect(() => {
+        // UseEffect requires IIFE: https://developer.mozilla.org/en-US/docs/Glossary/IIFE
         (async () => {
           const response = await fetch(BASE_API_URL + '/api/customers');
-          console.log(response)
           if (response.ok) {
             const results = await response.json();
             setCustomers(results);

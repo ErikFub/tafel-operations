@@ -4,7 +4,7 @@ import ItemList from "./ItemList";
 export default function CustomerList({ customers }) {
     return (
         <ItemList>
-            {customers.map(customer => <CustomerItem customer={customer} />)}
+            {customers.map(customer => <CustomerItem key={customer.id} customer={customer} />)}
         </ItemList>
     )
 }
