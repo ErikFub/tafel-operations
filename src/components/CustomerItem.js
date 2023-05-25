@@ -1,20 +1,22 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { useTafelApi } from '../contexts/ApiProvider'
+import { useToastContext } from "../contexts/ToastContext"
 
 
 
 export default function CustomerItem({ customer, handleRemoveCustomer }) {
     const api = useTafelApi();
+    const addToast = useToastContext();
     const handleDelete = () => {
         (async () => {
             const response = await api.delete('/customers/' + customer.id);
             if (response.ok) {
                 handleRemoveCustomer(customer.id)
-                // Todo: toast that deletion was successful
+                addToast({text: "Successfully deleted customer", type: 'success'})
             }
             else {
-                // Todo: toast that deletion failed
+                addToast({text: "Could not delete customer", type: 'error'})
             }
         })();
     }

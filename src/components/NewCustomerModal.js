@@ -1,9 +1,11 @@
 import Modal from "./Modal";
 import FormInput from "./FormInput";
 import { useTafelApi } from "../contexts/ApiProvider";
+import { useToastContext } from "../contexts/ToastContext";
 
 export default function NewCustomerModal({ setShowModal, handleAddCustomer }) {
     const api = useTafelApi();
+    const addToast = useToastContext();
     const handleCreate = (e) => {
         (async () => {
             // Prevent the browser from reloading the page
@@ -40,6 +42,7 @@ export default function NewCustomerModal({ setShowModal, handleAddCustomer }) {
                 setShowModal(false);
                 handleAddCustomer(response.body);
                 // Todo: toast that creation was successful
+                addToast({text: "Success", type: 'success'})
             }
             else {
                 // Todo: toast that creation failed
