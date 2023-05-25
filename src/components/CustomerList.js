@@ -1,4 +1,3 @@
-import { faHouseMedicalCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import CustomerItem from "./CustomerItem";
 import ItemList from "./ItemList";
 
