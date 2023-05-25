@@ -5,16 +5,22 @@ import { SearchBar } from './SearchBar'
 export default function ListHeader({ title, newButton, setShowNewModal, searchBar, searchText, onSearchTextChange }) {
     return (
         <>
+            {(searchBar) ?
             <h1 className="text-base font-bold text-gray-700 tracking-wide">
                 {title.toUpperCase()}
             </h1>
+            :
+            null
+            }
             <div className="columns-2 flex mb-3 mt-2 gap-3">
                 {(searchBar) ?
                 <div className='w-full'>
                     <SearchBar searchText={searchText} onSearchTextChange={onSearchTextChange}></SearchBar>
                 </div>
                 :
-                null
+                <h1 className="text-base font-bold text-gray-700 tracking-wide w-full">
+                    {title.toUpperCase()}
+                </h1>
                 }
 
                 {(newButton) ? 
