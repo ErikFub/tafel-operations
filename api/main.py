@@ -73,3 +73,11 @@ def read_supplier(supplier_id: int, db: Session = Depends(get_db)):
     if db_supplier is None:
         raise HTTPException(status_code=404, detail="Supplier not found")
     return db_supplier
+
+
+@app.delete("/api/suppliers/{supplier_id}", status_code=204)
+def delete_supplier(supplier_id: int, db: Session = Depends(get_db)):
+    db_supplier = crud.get_supplier(db=db, supplier_id=supplier_id)
+    if db_supplier is None:
+        raise HTTPException(status_code=404, detail="Supplier not found")
+    crud.delete_supplier(db=db, supplier_id=supplier_id)

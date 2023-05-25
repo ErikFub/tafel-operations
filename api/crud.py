@@ -78,3 +78,14 @@ def get_address_by_values(db: Session, address: schemas.AddressBase) -> models.A
         return result[0]
     else:
         return None
+
+
+def delete_supplier(db: Session, supplier_id: int):
+    db_supplier = db.get(models.Supplier, supplier_id)
+    address_id = db_supplier.address_id
+    db.delete(db_supplier)
+    if address_id is not None:
+        db_address = db.get(models.Address, address_id)
+        if not db_address.customers and not len(db_address.suppliers) > 1:
+            db.delete(db_address)
+    db.commit()
