@@ -1,12 +1,12 @@
 """Pydantic schemas for REST API."""
-from pydantic import BaseModel
+from pydantic import BaseModel, constr
 
 
 class AddressBase(BaseModel):
-    street: str
-    zip: str
-    city: str
-    country: str
+    street: constr(min_length=1, strip_whitespace=True)
+    zip: constr(min_length=1, strip_whitespace=True)
+    city: constr(min_length=1, strip_whitespace=True)
+    country: constr(min_length=2, max_length=2, to_upper=True, strip_whitespace=True)
 
 
 class AddressCreate(BaseModel):
@@ -21,8 +21,8 @@ class Address(AddressBase):
 
 
 class CustomerBase(BaseModel):
-    first_name: str
-    last_name: str
+    first_name: constr(min_length=1, strip_whitespace=True)
+    last_name: constr(min_length=1, strip_whitespace=True)
     address: AddressBase | None = None
 
 
@@ -39,7 +39,7 @@ class Customer(CustomerBase):
 
 
 class SupplierBase(BaseModel):
-    name: str
+    name: constr(min_length=1, strip_whitespace=True)
     address: AddressBase | None = None
 
 
