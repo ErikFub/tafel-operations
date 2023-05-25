@@ -8,9 +8,9 @@ export default function ListHeader({ title, newButton, setShowNewModal, searchBa
             <h1 className="text-base font-bold text-gray-700 tracking-wide">
                 {title.toUpperCase()}
             </h1>
-            <div className="columns-2 flex mb-3 mt-2">
+            <div className="columns-2 flex mb-3 mt-2 gap-3">
                 {(searchBar) ?
-                <div className='w-full mr-5'>
+                <div className='w-full'>
                     <SearchBar searchText={searchText} onSearchTextChange={onSearchTextChange}></SearchBar>
                 </div>
                 :
