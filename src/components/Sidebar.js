@@ -1,11 +1,14 @@
 import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
+
 
 export default function Sidebar() {
     // Adapted from https://flowbite.com/docs/components/sidebar/
     let navigation = [
-        ['Home', '/'],
-        ['Customers', '/customers'],
-        ['Suppliers', '/suppliers'],
+        ['Home', '/', <FontAwesomeIcon icon={icon({name: 'house'})} className='w-5 mr-3 text-gray-600'/>],
+        ['Customers', '/customers', <FontAwesomeIcon icon={icon({name: 'users'})} className='w-5 mr-3 text-gray-600'/>],
+        ['Suppliers', '/suppliers', <FontAwesomeIcon icon={icon({name: 'boxes-stacked'})} className='w-5 mr-3 text-gray-600'/>],
     ]
     return (
         <aside id="default-sidebar" className="fixed top-0 left-0 z-60 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
@@ -15,10 +18,10 @@ export default function Sidebar() {
                     <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Tafel Operations</span>
                 </a>
                 <ul className="space-y-2 font-medium">
-                    {navigation.map(([title, url]) => (
+                    {navigation.map(([title, url, ico]) => (
                     <li key={title}>
                         <NavLink id={title} to={url} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                            <span className="ml-3">{title}</span>
+                            <span className="ml-3">{ico}{title}</span>
                         </NavLink>
                     </li>
                     ))}
