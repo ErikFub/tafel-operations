@@ -14,21 +14,30 @@ export default function NewCustomerModal({ setShowModal, handleAddCustomer }) {
             // Read the form data
             const form = e.target;
             const formData = new FormData(form);
+            const formJson = Object.fromEntries(formData.entries());
 
             // Validate data
-            // todo
+            if (formJson['first-name'] === '' || formJson['last-name'] === '') {
+                addToast({text: "First and last name cannot be empty", type: 'error'})
+                return
+            }
+            const addressFields = {
+                "street": formJson["street"],
+                "zip": formJson["zip"],
+                "city": formJson["city"],
+                "country": formJson["country"],
+            }
+            const cntEmptyAddressFields = Object.values(addressFields).filter(field => field === '').length
+            if (cntEmptyAddressFields && cntEmptyAddressFields < Object.values(addressFields).length) {
+                addToast({text: "Either all or no address fields can be empty", type: 'error'})
+                return
+            }
         
             // Construct request body
-            const formJson = Object.fromEntries(formData.entries());
             const postBody = {
                 "first_name": formJson['first-name'],
                 "last_name": formJson['last-name'],
-                "address": {
-                    "street": formJson["street"],
-                    "zip": formJson["zip"],
-                    "city": formJson["city"],
-                    "country": formJson["country"],
-                }
+                "address": addressFields
             }
             if (!Object.values(postBody.address).filter(v => v !== '').length) {
                 delete postBody.address
@@ -41,11 +50,10 @@ export default function NewCustomerModal({ setShowModal, handleAddCustomer }) {
             if (response.ok) {
                 setShowModal(false);
                 handleAddCustomer(response.body);
-                // Todo: toast that creation was successful
-                addToast({text: "Success", type: 'success'})
+                addToast({text: "Created customer", type: 'success'})
             }
             else {
-                // Todo: toast that creation failed
+                addToast({text: "Could not create customer", type: 'success'})
             }
         })();
     }
