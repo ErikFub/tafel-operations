@@ -4,6 +4,7 @@ import CustomerList from "../components/CustomerList"
 import Spinner from '../components/Spinner';
 import { useTafelApi } from '../contexts/ApiProvider';
 import ListHeader from '../components/ListHeader';
+import ModalForm from '../components/ModalForm';
 
 
 export default function CustomersPage() {
@@ -35,6 +36,7 @@ export default function CustomersPage() {
                 <>
                     <ListHeader title={"customers"} newButton />
                     <CustomerList customers={customers} setCustomers={setCustomers}/>
+                    <ModalForm />
                 </>
             }
         </Body>
