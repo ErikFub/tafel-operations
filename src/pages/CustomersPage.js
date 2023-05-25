@@ -9,6 +9,7 @@ import ModalForm from '../components/ModalForm';
 
 export default function CustomersPage() {
     const [customers, setCustomers] = useState()
+    const [showNewModal, setShowNewModal] = useState(false)
 
     // Fetch customer data
     const api = useTafelApi();
@@ -34,9 +35,9 @@ export default function CustomersPage() {
                 </>
             :
                 <>
-                    <ListHeader title={"customers"} newButton />
+                    <ListHeader title={"customers"} newButton setShowNewModal={setShowNewModal} />
                     <CustomerList customers={customers} setCustomers={setCustomers}/>
-                    <ModalForm />
+                    {showNewModal && <ModalForm setShowModal={setShowNewModal}/>}
                 </>
             }
         </Body>
