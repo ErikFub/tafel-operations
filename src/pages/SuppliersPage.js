@@ -10,6 +10,7 @@ import NewSupplierModal from '../components/NewSupplierModal';
 export default function SuppliersPage() {
     const [suppliers, setSuppliers] = useState()
     const [showNewModal, setShowNewModal] = useState(false)
+    const [searchText, setSearchText] = useState('')
 
     // Fetch supplier data
     const api = useTafelApi();
@@ -52,8 +53,8 @@ export default function SuppliersPage() {
                 </>
             :
                 <>
-                    <ListHeader title={"suppliers"} newButton setShowNewModal={setShowNewModal} />
-                    <SupplierList suppliers={suppliers} handleRemoveSupplier={handleRemoveSupplier}/>
+                    <ListHeader title={"suppliers"} newButton setShowNewModal={setShowNewModal} searchBar searchText={searchText} onSearchTextChange={setSearchText} />
+                    <SupplierList suppliers={suppliers} handleRemoveSupplier={handleRemoveSupplier} searchText={searchText} />
                     {showNewModal && <NewSupplierModal setShowModal={setShowNewModal} handleAddSupplier={handleAddSupplier} />}
                 </>
             }
