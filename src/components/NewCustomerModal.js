@@ -53,7 +53,7 @@ export default function NewCustomerModal({ setShowModal, handleAddCustomer }) {
                 addToast({text: "Created customer", type: 'success'})
             }
             else {
-                addToast({text: "Could not create customer", type: 'success'})
+                addToast({text: "Could not create customer", type: 'error'})
             }
         })();
     }
