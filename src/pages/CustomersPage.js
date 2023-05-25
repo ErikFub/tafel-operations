@@ -4,7 +4,7 @@ import CustomerList from "../components/CustomerList"
 import Spinner from '../components/Spinner';
 import { useTafelApi } from '../contexts/ApiProvider';
 import ListHeader from '../components/ListHeader';
-import ModalForm from '../components/ModalForm';
+import NewCustomerModal from '../components/NewCustomerModal';
 
 
 export default function CustomersPage() {
@@ -26,6 +26,23 @@ export default function CustomersPage() {
         })();
       }, [api]);
 
+      const handleRemoveCustomer = (customerId) => {
+        setCustomers((customers) => {
+          // Create a new array without the item to remove
+          let updatedList = [...customers];
+          updatedList = customers.filter((customer) => customer.id !== customerId);
+          return updatedList;
+        });
+      };
+
+      const handleAddCustomer = (customer) => {
+        setCustomers((customers) => {
+          // Create a new array without the item to remove
+          let updatedList = [...customers, customer];
+          return updatedList;
+        });
+      };
+
     return (
         <Body sidebar>
             {customers === undefined ? 
@@ -36,8 +53,8 @@ export default function CustomersPage() {
             :
                 <>
                     <ListHeader title={"customers"} newButton setShowNewModal={setShowNewModal} />
-                    <CustomerList customers={customers} setCustomers={setCustomers}/>
-                    {showNewModal && <ModalForm setShowModal={setShowNewModal}/>}
+                    <CustomerList customers={customers} handleRemoveCustomer={handleRemoveCustomer}/>
+                    {showNewModal && <NewCustomerModal setShowModal={setShowNewModal} handleAddCustomer={handleAddCustomer} />}
                 </>
             }
         </Body>
