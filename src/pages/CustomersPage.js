@@ -10,6 +10,7 @@ import NewCustomerModal from '../components/NewCustomerModal';
 export default function CustomersPage() {
     const [customers, setCustomers] = useState()
     const [showNewModal, setShowNewModal] = useState(false)
+    const [searchText, setSearchText] = useState('')
 
     // Fetch customer data
     const api = useTafelApi();
@@ -52,8 +53,8 @@ export default function CustomersPage() {
                 </>
             :
                 <>
-                    <ListHeader title={"customers"} newButton setShowNewModal={setShowNewModal} />
-                    <CustomerList customers={customers} handleRemoveCustomer={handleRemoveCustomer}/>
+                    <ListHeader title={"customers"} newButton setShowNewModal={setShowNewModal} searchBar searchText={searchText} onSearchTextChange={setSearchText} />
+                    <CustomerList customers={customers} handleRemoveCustomer={handleRemoveCustomer} searchText={searchText} />
                     {showNewModal && <NewCustomerModal setShowModal={setShowNewModal} handleAddCustomer={handleAddCustomer} />}
                 </>
             }
