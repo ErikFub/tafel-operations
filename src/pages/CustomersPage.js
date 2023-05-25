@@ -48,7 +48,7 @@ export default function CustomersPage() {
         <Body sidebar>
             {customers === undefined ? 
                 <>
-                    <ListHeader title={"customers"} />
+                    <ListHeader title={"customers"} newButton setShowNewModal={setShowNewModal} searchBar searchText={searchText} onSearchTextChange={setSearchText}/>
                     <Spinner />
                 </>
             :

@@ -48,7 +48,7 @@ export default function SuppliersPage() {
         <Body sidebar>
             {suppliers === undefined ? 
                 <>
-                    <ListHeader title={"suppliers"} />
+                    <ListHeader title={"suppliers"} newButton setShowNewModal={setShowNewModal} searchBar searchText={searchText} onSearchTextChange={setSearchText} />
                     <Spinner />
                 </>
             :

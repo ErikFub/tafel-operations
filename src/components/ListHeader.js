@@ -6,13 +6,13 @@ export default function ListHeader({ title, newButton, setShowNewModal, searchBa
     return (
         <>
             {(searchBar) ?
-            <h1 className="text-base font-bold text-gray-700 tracking-wide">
+            <h1 className="text-base font-bold text-gray-700 tracking-wide mb-2">
                 {title.toUpperCase()}
             </h1>
             :
             null
             }
-            <div className="columns-2 flex mb-3 mt-2 gap-3">
+            <div className="columns-2 flex mb-3 gap-3">
                 {(searchBar) ?
                 <div className='w-full'>
                     <SearchBar searchText={searchText} onSearchTextChange={onSearchTextChange}></SearchBar>
