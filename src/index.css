@@ -22,3 +22,7 @@ code {
   z-index: 999;
   position: fixed;
 }
+
+aside ul > li > a.active {
+  @apply font-bold bg-gray-100;
+}
