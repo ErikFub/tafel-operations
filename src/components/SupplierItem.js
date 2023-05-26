@@ -1,6 +1,6 @@
 import { useTafelApi } from '../contexts/ApiProvider'
 import { useToastContext } from "../contexts/ToastContext"
-import DeleteButton from './DeleteButton';
+import ThreeDotMenuButton from './ThreeDotMenuButton';
 
 
 
@@ -33,7 +33,7 @@ export default function SupplierItem({ supplier, handleRemoveSupplier }) {
                     undefined
                 }
             </div>
-            <DeleteButton handleDelete={handleDelete} />
+            <ThreeDotMenuButton />
         </li>
     )
 }

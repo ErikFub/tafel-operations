@@ -1,12 +1,27 @@
 import { useTafelApi } from '../contexts/ApiProvider'
 import { useToastContext } from "../contexts/ToastContext"
-import DeleteButton from './DeleteButton';
+import DropdownItem from './DropdownItem';
+import ThreeDotMenu from './ThreeDotMenu';
 
 
 
 export default function CustomerItem({ customer, handleRemoveCustomer }) {
     const api = useTafelApi();
     const addToast = useToastContext();
+
+    const handleEdit = () => {
+        (async () => {
+            const response = await api.put('/customers/' + customer.id);
+            if (response.ok) {
+                handleRemoveCustomer(customer.id)
+                addToast({text: "Successfully edited customer", type: 'success'})
+            }
+            else {
+                addToast({text: "Could not edit customer", type: 'error'})
+            }
+        })();
+    }
+
     const handleDelete = () => {
         (async () => {
             const response = await api.delete('/customers/' + customer.id);
@@ -19,6 +34,7 @@ export default function CustomerItem({ customer, handleRemoveCustomer }) {
             }
         })();
     }
+
     return (
         <li id={customer.id} class="p-3 columns-2 flex">
             <div className="w-full content-center grid">
@@ -33,7 +49,10 @@ export default function CustomerItem({ customer, handleRemoveCustomer }) {
                     undefined
                 }
             </div>
-            <DeleteButton handleDelete={handleDelete} />
+            <ThreeDotMenu>
+                <DropdownItem text={'Edit'} handleClick={handleEdit} />
+                <DropdownItem text={'Delete'} handleClick={handleDelete} />
+            </ThreeDotMenu>
         </li>
     )
 }
