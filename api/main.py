@@ -49,6 +49,15 @@ def read_customer(customer_id: int, db: Session = Depends(get_db)):
     return db_customer
 
 
+@app.put("/api/customers/{customer_id}", response_model=schemas.Customer)
+def update_customer(customer_id, customer_update: schemas.CustomerUpdate, db: Session = Depends(get_db)):
+    db_customer = crud.get_customer(db=db, customer_id=customer_id)
+    if db_customer is None:
+        raise HTTPException(status_code=404, detail="Customer not found")
+    db_updated_customer = crud.update_customer(db=db, customer_id=customer_id, customer_update=customer_update)
+    return db_updated_customer
+
+
 @app.delete("/api/customers/{customer_id}", status_code=204)
 def delete_customer(customer_id: int, db: Session = Depends(get_db)):
     db_customer = crud.get_customer(db=db, customer_id=customer_id)
@@ -73,6 +82,15 @@ def read_supplier(supplier_id: int, db: Session = Depends(get_db)):
     if db_supplier is None:
         raise HTTPException(status_code=404, detail="Supplier not found")
     return db_supplier
+
+
+@app.put("/api/suppliers/{supplier_id}", response_model=schemas.Supplier)
+def update_supplier(supplier_id, supplier_update: schemas.SupplierUpdate, db: Session = Depends(get_db)):
+    db_supplier = crud.get_supplier(db=db, supplier_id=supplier_id)
+    if db_supplier is None:
+        raise HTTPException(status_code=404, detail="Supplier not found")
+    db_updated_supplier = crud.update_supplier(db=db, supplier_id=supplier_id, supplier_update=supplier_update)
+    return db_updated_supplier
 
 
 @app.delete("/api/suppliers/{supplier_id}", status_code=204)

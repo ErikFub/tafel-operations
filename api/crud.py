@@ -1,7 +1,56 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import select, delete
+from sqlalchemy import select
 
 from . import models, schemas
+
+
+def get_address_by_values(db: Session, address: schemas.AddressBase) -> models.Address | None:
+    result = db.execute(select(models.Address).filter_by(street=address.street, zip=address.zip, city=address.city, country=address.country)
+                        ).scalars().all()
+    if len(result) > 1:
+        raise Exception("More than one address found.")
+    elif result:
+        return result[0]
+    else:
+        return None
+
+
+def update_entity_address(db: Session, entity: models.Base | None, updated_address: schemas.AddressUpdate):
+    # Log old address
+    old_address = entity.address
+
+    # Address should be set in update
+    if updated_address is not None:
+        db_address = get_address_by_values(db=db, address=updated_address)
+        # Address already exists in DB
+        if db_address is not None:
+            # Updated address is different from current address
+            if db_address.id != entity.address_id:
+                entity.address = db_address
+            # Addresses are equal, we can stop the update process
+            else:
+                return
+            
+        # Address needs to be created
+        else:
+            entity.address = models.Address(
+                street=updated_address.street, zip=updated_address.zip, city=updated_address.city, country=updated_address.country
+            )
+
+    # Address should be removed
+    elif entity.address is not None:
+        entity.address = None
+
+    # Address was and will be `None`
+    else:
+        return
+
+    # Check if old address should be deleted
+    if old_address is not None and len(old_address.customers) + len(old_address.suppliers) == 0:
+        db.delete(old_address)
+
+    # Execute update
+    db.commit()
 
 
 def create_customer(db: Session, customer: schemas.CustomerCreate) -> models.Customer:
@@ -31,7 +80,28 @@ def get_customers(db: Session) -> list[models.Customer]:
     return db.scalars(select(models.Customer)).all()
 
 
-def delete_customer(db: Session, customer_id: int):
+def update_customer(db: Session, customer_id: int, customer_update: schemas.CustomerUpdate) -> models.Customer:
+    db_customer = db.get(models.Customer, customer_id)
+
+    # Update non-FK fields
+    fields_to_compare: list[str] = [
+        'first_name',
+        'last_name'
+    ]
+    for field in fields_to_compare:
+        if (update_val := customer_update.__dict__[field]) != db_customer.__dict__[field]:
+            setattr(db_customer, field, update_val)
+    db.commit()
+    
+    # Update address
+    update_entity_address(db=db, entity=db_customer, updated_address=customer_update.address)
+    
+    # Return updated value
+    db.refresh(db_customer)
+    return db_customer
+
+
+def delete_customer(db: Session, customer_id: int) -> None:
     db_customer = db.get(models.Customer, customer_id)
     address_id = db_customer.address_id
     db.delete(db_customer)
@@ -69,18 +139,27 @@ def get_suppliers(db: Session) -> list[models.Supplier]:
     return db.scalars(select(models.Supplier)).all()
 
 
-def get_address_by_values(db: Session, address: schemas.AddressBase) -> models.Address | None:
-    result = db.execute(select(models.Address).filter_by(street=address.street, zip=address.zip, city=address.city, country=address.country)
-                        ).scalars().all()
-    if len(result) > 1:
-        raise Exception("More than one address found.")
-    elif result:
-        return result[0]
-    else:
-        return None
+def update_supplier(db: Session, supplier_id: int, supplier_update: schemas.SupplierUpdate) -> models.Supplier:
+    db_supplier = db.get(models.Supplier, supplier_id)
+
+    # Update non-FK fields
+    fields_to_compare: list[str] = [
+        'name',
+    ]
+    for field in fields_to_compare:
+        if (update_val := supplier_update.__dict__[field]) != db_supplier.__dict__[field]:
+            setattr(db_supplier, field, update_val)
+    db.commit()
+    
+    # Update address
+    update_entity_address(db=db, entity=db_supplier, updated_address=supplier_update.address)
+    
+    # Return updated value
+    db.refresh(db_supplier)
+    return db_supplier
 
 
-def delete_supplier(db: Session, supplier_id: int):
+def delete_supplier(db: Session, supplier_id: int) -> None:
     db_supplier = db.get(models.Supplier, supplier_id)
     address_id = db_supplier.address_id
     db.delete(db_supplier)
