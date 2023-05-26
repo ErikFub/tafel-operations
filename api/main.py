@@ -31,7 +31,7 @@ def get_db():
         db.close()
 
 
-@app.post("/api/customers", response_model=schemas.Customer)
+@app.post("/api/customers", response_model=schemas.Customer, status_code=201)
 def create_customer(customer: schemas.CustomerCreate, db: Session = Depends(get_db)):
     return crud.create_customer(db=db, customer=customer)
 
@@ -57,7 +57,7 @@ def delete_customer(customer_id: int, db: Session = Depends(get_db)):
     crud.delete_customer(db=db, customer_id=customer_id)
 
 
-@app.post("/api/suppliers", response_model=schemas.Supplier)
+@app.post("/api/suppliers", response_model=schemas.Supplier, status_code=201)
 def create_supplier(supplier: schemas.SupplierCreate, db: Session = Depends(get_db)):
     return crud.create_supplier(db=db, supplier=supplier)
 
