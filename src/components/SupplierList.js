@@ -1,11 +1,11 @@
 import SupplierItem from "./SupplierItem";
 import ItemList from "./ItemList";
 
-export default function SupplierList({ suppliers, handleRemoveSupplier, searchText }) {
+export default function SupplierList({ suppliers, handleRemoveSupplier, searchText, setShowEditModal }) {
     const suppliersFiltered = suppliers.filter(supplier => (supplier.name).toLowerCase().indexOf(searchText.toLowerCase()) !== -1)
     return (
         <ItemList>
-            {suppliersFiltered.map(supplier => <SupplierItem key={supplier.id} supplier={supplier} handleRemoveSupplier={handleRemoveSupplier} />)}
+            {suppliersFiltered.map(supplier => <SupplierItem key={supplier.id} supplier={supplier} handleRemoveSupplier={handleRemoveSupplier} setShowEditModal={setShowEditModal} />)}
         </ItemList>
     )
 }

@@ -5,21 +5,12 @@ import ThreeDotMenu from './ThreeDotMenu';
 
 
 
-export default function CustomerItem({ customer, handleRemoveCustomer }) {
+export default function CustomerItem({ customer, handleRemoveCustomer, setShowEditModal }) {
     const api = useTafelApi();
     const addToast = useToastContext();
 
     const handleEdit = () => {
-        (async () => {
-            const response = await api.put('/customers/' + customer.id);
-            if (response.ok) {
-                handleRemoveCustomer(customer.id)
-                addToast({text: "Successfully edited customer", type: 'success'})
-            }
-            else {
-                addToast({text: "Could not edit customer", type: 'error'})
-            }
-        })();
+        setShowEditModal(customer.id)
     }
 
     const handleDelete = () => {

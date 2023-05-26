@@ -5,11 +5,13 @@ import Spinner from '../components/Spinner';
 import { useTafelApi } from '../contexts/ApiProvider';
 import ListHeader from '../components/ListHeader';
 import NewSupplierModal from '../components/NewSupplierModal';
+import EditSupplierModal from '../components/EditSupplierModal';
 
 
 export default function SuppliersPage() {
     const [suppliers, setSuppliers] = useState()
     const [showNewModal, setShowNewModal] = useState(false)
+    const [showEditModal, setShowEditModal] = useState(false)  // false if not shown, int (ID of supplier to be edited) if should be shown
     const [searchText, setSearchText] = useState('')
 
     // Fetch supplier data
@@ -44,6 +46,14 @@ export default function SuppliersPage() {
         });
       };
 
+      const handleUpdateSupplier = (supplier) => {
+        setSuppliers((suppliers) => {
+          // Create a new array without the item to remove
+          let updatedList = suppliers.map(supplierElement => supplierElement.id === supplier.id ? supplier : supplierElement);
+          return updatedList;
+        });
+      };
+
     return (
         <Body sidebar>
             {suppliers === undefined ? 
@@ -54,8 +64,9 @@ export default function SuppliersPage() {
             :
                 <>
                     <ListHeader title={"suppliers"} newButton setShowNewModal={setShowNewModal} searchBar searchText={searchText} onSearchTextChange={setSearchText} />
-                    <SupplierList suppliers={suppliers} handleRemoveSupplier={handleRemoveSupplier} searchText={searchText} />
+                    <SupplierList suppliers={suppliers} handleRemoveSupplier={handleRemoveSupplier} searchText={searchText} setShowEditModal={setShowEditModal} />
                     {showNewModal && <NewSupplierModal setShowModal={setShowNewModal} handleAddSupplier={handleAddSupplier} />}
+                    {showEditModal && <EditSupplierModal setShowModal={setShowEditModal} handleUpdateSupplier={handleUpdateSupplier} suppliers={suppliers} supplierId={showEditModal} />}
                 </>
             }
         </Body>

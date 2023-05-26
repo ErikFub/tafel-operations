@@ -1,12 +1,18 @@
 import { useTafelApi } from '../contexts/ApiProvider'
 import { useToastContext } from "../contexts/ToastContext"
-import ThreeDotMenuButton from './ThreeDotMenuButton';
+import ThreeDotMenu from './ThreeDotMenu';
+import DropdownItem from './DropdownItem';
 
 
 
-export default function SupplierItem({ supplier, handleRemoveSupplier }) {
+export default function SupplierItem({ supplier, handleRemoveSupplier, setShowEditModal }) {
     const api = useTafelApi();
     const addToast = useToastContext();
+
+    const handleEdit = () => {
+        setShowEditModal(supplier.id)
+    }
+
     const handleDelete = () => {
         (async () => {
             const response = await api.delete('/suppliers/' + supplier.id);
@@ -33,7 +39,10 @@ export default function SupplierItem({ supplier, handleRemoveSupplier }) {
                     undefined
                 }
             </div>
-            <ThreeDotMenuButton />
+            <ThreeDotMenu>
+                <DropdownItem text={'Edit'} handleClick={handleEdit} />
+                <DropdownItem text={'Delete'} handleClick={handleDelete} />
+            </ThreeDotMenu>
         </li>
     )
 }
