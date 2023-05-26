@@ -19,6 +19,8 @@ class AddressUpdate(AddressBase):
 
 class Address(AddressBase):
     id: int
+    lat: float
+    lon: float
 
     class Config:
         orm_mode = True
