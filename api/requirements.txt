@@ -4,3 +4,7 @@ uvicorn
 psycopg2-binary
 alembic
 watchfiles
+geopy
+certifi
+numpy
+python-tsp
