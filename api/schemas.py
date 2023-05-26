@@ -9,7 +9,11 @@ class AddressBase(BaseModel):
     country: constr(min_length=2, max_length=2, to_upper=True, strip_whitespace=True)
 
 
-class AddressCreate(BaseModel):
+class AddressCreate(AddressBase):
+    pass
+
+
+class AddressUpdate(AddressBase):
     pass
 
 
@@ -27,7 +31,11 @@ class CustomerBase(BaseModel):
 
 
 class CustomerCreate(CustomerBase):
-    pass
+    address: AddressCreate | None = None
+
+
+class CustomerUpdate(CustomerBase):
+    address: AddressUpdate | None = None
 
 
 class Customer(CustomerBase):
@@ -44,7 +52,11 @@ class SupplierBase(BaseModel):
 
 
 class SupplierCreate(SupplierBase):
-    pass
+    address: AddressCreate | None = None
+
+
+class SupplierUpdate(SupplierBase):
+    address: AddressUpdate | None = None
 
 
 class Supplier(SupplierBase):
