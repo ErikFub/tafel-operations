@@ -31,12 +31,12 @@ def get_db():
         db.close()
 
 
-@app.post("/api/customers/", response_model=schemas.Customer)
+@app.post("/api/customers", response_model=schemas.Customer)
 def create_customer(customer: schemas.CustomerCreate, db: Session = Depends(get_db)):
     return crud.create_customer(db=db, customer=customer)
 
 
-@app.get("/api/customers/", response_model=list[schemas.Customer])
+@app.get("/api/customers", response_model=list[schemas.Customer])
 def read_customers(db: Session = Depends(get_db)):
     return crud.get_customers(db=db)
 
@@ -57,12 +57,12 @@ def delete_customer(customer_id: int, db: Session = Depends(get_db)):
     crud.delete_customer(db=db, customer_id=customer_id)
 
 
-@app.post("/api/suppliers/", response_model=schemas.Supplier)
+@app.post("/api/suppliers", response_model=schemas.Supplier)
 def create_supplier(supplier: schemas.SupplierCreate, db: Session = Depends(get_db)):
     return crud.create_supplier(db=db, supplier=supplier)
 
 
-@app.get("/api/suppliers/", response_model=list[schemas.Supplier])
+@app.get("/api/suppliers", response_model=list[schemas.Supplier])
 def read_suppliers(db: Session = Depends(get_db)):
     return crud.get_suppliers(db=db)
 
