@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from . import crud, models, schemas
 from .database import SessionLocal, engine
+from .services import tsp_solver
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -99,3 +100,14 @@ def delete_supplier(supplier_id: int, db: Session = Depends(get_db)):
     if db_supplier is None:
         raise HTTPException(status_code=404, detail="Supplier not found")
     crud.delete_supplier(db=db, supplier_id=supplier_id)
+
+
+@app.post("/api/routing/suppliers", response_model=list[schemas.Supplier])
+def geocode_address(ids: list[int], db: Session = Depends(get_db)):
+    supplier_coordinates = [
+        (id, tsp_solver.Coordinate(address.lat, address.lon))
+        for id in ids
+        if (address := crud.get_supplier(db, id).address) is not None
+    ]
+    route = tsp_solver.get_best_route(coordinates=[e[1] for e in supplier_coordinates])
+    return [crud.get_supplier(db=db, supplier_id=supplier_coordinates[i][0]) for i in route]
