@@ -111,3 +111,14 @@ def geocode_address(ids: list[int], db: Session = Depends(get_db)):
     ]
     route = tsp_solver.get_best_route(coordinates=[e[1] for e in supplier_coordinates])
     return [crud.get_supplier(db=db, supplier_id=supplier_coordinates[i][0]) for i in route]
+
+
+@app.post("/api/routing/customers", response_model=list[schemas.Customer])
+def geocode_address(ids: list[int], db: Session = Depends(get_db)):
+    supplier_coordinates = [
+        (id, tsp_solver.Coordinate(address.lat, address.lon))
+        for id in ids
+        if (address := crud.get_customer(db, id).address) is not None
+    ]
+    route = tsp_solver.get_best_route(coordinates=[e[1] for e in supplier_coordinates])
+    return [crud.get_customer(db=db, supplier_id=supplier_coordinates[i][0]) for i in route]
