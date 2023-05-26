@@ -15,6 +15,8 @@ class Address(Base):
     zip: Mapped[str]
     city: Mapped[str]
     country: Mapped[str]
+    lat: Mapped[float]
+    lon: Mapped[float]
 
     customers: Mapped[list["Customer"]] = relationship(back_populates='address')
     suppliers: Mapped[list["Supplier"]] = relationship(back_populates='address')
