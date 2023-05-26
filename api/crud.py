@@ -2,6 +2,18 @@ from sqlalchemy.orm import Session
 from sqlalchemy import select
 
 from . import models, schemas
+from .services import geocoder
+
+
+def create_address(address: schemas.AddressBase, db: Session = None, commit: bool = False) -> models.Address:
+    lat, lon = geocoder.address_to_geolocation(address=address)
+    db_address = models.Address(
+        street=address.street, zip=address.zip, city=address.city, country=address.country, lat=lat, lon=lon
+    )
+    if commit:
+        db.commit(address)
+    return db_address
+
 
 
 def get_address_by_values(db: Session, address: schemas.AddressBase) -> models.Address | None:
@@ -33,9 +45,7 @@ def update_entity_address(db: Session, entity: models.Base | None, updated_addre
             
         # Address needs to be created
         else:
-            entity.address = models.Address(
-                street=updated_address.street, zip=updated_address.zip, city=updated_address.city, country=updated_address.country
-            )
+            entity.address = create_address(address=updated_address)
 
     # Address should be removed
     elif entity.address is not None:
@@ -55,9 +65,7 @@ def update_entity_address(db: Session, entity: models.Base | None, updated_addre
 
 def create_customer(db: Session, customer: schemas.CustomerCreate) -> models.Customer:
     if customer.address is not None:
-        db_address = models.Address(
-            street=customer.address.street, zip=customer.address.zip, city=customer.address.city, country=customer.address.country
-        )
+        db_address = create_address(customer.address)
         db_address_result = get_address_by_values(db=db, address=customer.address)
         if db_address_result is not None:
             db_address = db_address_result
@@ -114,9 +122,7 @@ def delete_customer(db: Session, customer_id: int) -> None:
 
 def create_supplier(db: Session, supplier: schemas.SupplierCreate) -> models.Supplier:
     if supplier.address is not None:
-        db_address = models.Address(
-            street=supplier.address.street, zip=supplier.address.zip, city=supplier.address.city, country=supplier.address.country
-        )
+        db_address = create_address(supplier.address)
         db_address_result = get_address_by_values(db=db, address=supplier.address)
         if db_address_result is not None:
             db_address=db_address_result
