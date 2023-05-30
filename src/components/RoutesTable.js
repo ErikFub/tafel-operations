@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom"
+
 export default function RoutesTable({ routes }) {
+    const navigate = useNavigate()
     return (
         <div className="rounded-lg bg-white shadow px-5 py-1">
             <table className="w-full text-left">
@@ -11,7 +14,7 @@ export default function RoutesTable({ routes }) {
                 </thead>
                 <tbody>
                     {routes.map(route => 
-                        <tr>
+                        <tr onClick={() => navigate(`/routing/routes/${route.id}`)}>
                             <td>{route.name}</td>
                             <td>{route.timestamp}</td>
                             <td>{route.type}</td>
