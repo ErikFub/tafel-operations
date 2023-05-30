@@ -22,6 +22,6 @@ def address_to_geolocation(address: Address) -> tuple[float, float]:
     geolocator = Nominatim(user_agent='tafel_operations_app')
     geocode = geolocator.geocode(query=f"{address.street}, {address.zip} {address.city}, {address.country}")
     if geocode is not None:
-        return (geocode.latitude, geocode.longitude)
+        return geocode.latitude, geocode.longitude
     else:
-        return (0, 0)
+        return 0, 0

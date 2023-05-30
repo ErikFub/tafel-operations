@@ -11,9 +11,9 @@ def create_address(address: schemas.AddressBase, db: Session = None, commit: boo
         street=address.street, zip=address.zip, city=address.city, country=address.country, lat=lat, lon=lon
     )
     if commit:
-        db.commit(address)
+        db.add(address)
+        db.commit()
     return db_address
-
 
 
 def get_address_by_values(db: Session, address: schemas.AddressBase) -> models.Address | None:

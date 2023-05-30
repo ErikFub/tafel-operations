@@ -115,10 +115,10 @@ def create_supplier_route(ids: list[int], db: Session = Depends(get_db)):
 
 @app.post("/api/routing/customers", response_model=list[schemas.Customer])
 def create_customer_route(ids: list[int], db: Session = Depends(get_db)):
-    supplier_coordinates = [
+    customer_coordinates = [
         (id, tsp_solver.Coordinate(address.lat, address.lon))
         for id in ids
         if (address := crud.get_customer(db, id).address) is not None
     ]
-    route = tsp_solver.get_best_route(coordinates=[e[1] for e in supplier_coordinates])
-    return [crud.get_customer(db=db, supplier_id=supplier_coordinates[i][0]) for i in route]
+    route = tsp_solver.get_best_route(coordinates=[e[1] for e in customer_coordinates])
+    return [crud.get_customer(db=db, customer_id=customer_coordinates[i][0]) for i in route]
