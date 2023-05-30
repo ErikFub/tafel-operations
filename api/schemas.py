@@ -1,5 +1,8 @@
 """Pydantic schemas for REST API."""
+import datetime
+
 from pydantic import BaseModel, constr
+from typing import Literal
 
 
 class AddressBase(BaseModel):
@@ -68,3 +71,23 @@ class Supplier(SupplierBase):
     class Config:
         orm_mode = True
     
+
+class RouteBase(BaseModel):
+    nodes: list
+    type: Literal["suppliers", "customers"]
+
+
+class RouteCreate(RouteBase):
+    name: str
+    nodes: list[int]
+
+
+class RouteSolverRequest(RouteBase):
+    nodes: list[int]
+
+
+class Route(RouteBase):
+    id: int
+    name: str
+    nodes: list[Customer | Supplier]
+    timestamp: datetime.datetime

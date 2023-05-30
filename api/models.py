@@ -1,6 +1,9 @@
 """Data models for SQLAlchemy ORM."""
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, UniqueConstraint
+import datetime
+
+from sqlalchemy import ForeignKey, UniqueConstraint, CheckConstraint, DateTime
 from sqlalchemy.orm import relationship, mapped_column, Mapped
+from sqlalchemy.sql import func
 
 from .database import Base
 
@@ -41,3 +44,30 @@ class Supplier(Base):
     address_id: Mapped[int | None] = mapped_column(ForeignKey("addresses.id"))
 
     address: Mapped["Address"] = relationship(back_populates="suppliers")
+
+
+class Route(Base):
+    __tablename__ = "routes"
+    __table_args__ = (
+        CheckConstraint("type in ('customers', 'suppliers')", "type_valid"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str]
+    type: Mapped[str]
+    timestamp: Mapped[datetime.datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+
+    nodes: Mapped[list["RouteNode"]] = relationship(back_populates="route")
+
+
+class RouteNode(Base):
+    __tablename__ = "routes_nodes"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    route_id: Mapped[int] = mapped_column(ForeignKey("routes.id"))
+    entity_id: Mapped[int]
+    prev: Mapped[int | None] = mapped_column(ForeignKey("routes_nodes.id"))
+
+    route: Mapped["Route"] = relationship(back_populates="nodes")
