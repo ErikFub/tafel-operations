@@ -30,3 +30,7 @@ aside ul > li > a.active {
 .all-screen {
   @apply absolute top-0 left-0 h-full w-full;
 }
+
+ul.radio-selector > li.active {
+  @apply text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300
+}
