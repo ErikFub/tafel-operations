@@ -133,3 +133,23 @@ def read_route(route_id: int, db: Session = Depends(get_db)):
         nodes=[get_entity_details(db, node.entity_id) for node in db_route.nodes],
         timestamp=db_route.timestamp
     )
+
+
+@app.get("/api/routing/routes", response_model=list[schemas.Route])
+def read_routes(db: Session = Depends(get_db)):
+    db_routes = crud.get_routes(db=db)
+    routes = []
+    for db_route in db_routes:
+        if db_route is None:
+            raise HTTPException(status_code=404, detail="Route not found")
+
+        get_entity_details = crud.get_supplier if db_route.type == 'suppliers' else crud.get_customer
+        route = schemas.Route(
+            id=db_route.id,
+            name=db_route.name,
+            type=db_route.type,
+            nodes=[get_entity_details(db, node.entity_id) for node in db_route.nodes],
+            timestamp=db_route.timestamp
+        )
+        routes.append(route)
+    return routes

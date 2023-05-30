@@ -197,5 +197,8 @@ def create_route(db: Session, route: schemas.RouteCreate) -> int:
 
 
 def get_route(db: Session, route_id: int) -> models.Route | None:
-
     return db.get(models.Route, route_id)
+
+
+def get_routes(db: Session) -> list[models.Route]:
+    return db.scalars(select(models.Route)).all()
