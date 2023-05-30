@@ -6,6 +6,7 @@ import SuppliersPage from './pages/SuppliersPage';
 import TafelApiProvider from './contexts/ApiProvider';
 import { ToastContextProvider } from './contexts/ToastContext';
 import RoutingPage from './pages/RoutingPage';
+import RouteDetailsPage from './pages/RouteDetailsPage';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path="/suppliers" element={<SuppliersPage />} />
             <Route path="/customers" element={<CustomersPage />} />
             <Route path="/routing" element={<RoutingPage />} />
+            <Route path="/routing/routes/:id" element={<RouteDetailsPage />}/>
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </ToastContextProvider>
