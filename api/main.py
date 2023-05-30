@@ -103,7 +103,7 @@ def delete_supplier(supplier_id: int, db: Session = Depends(get_db)):
 
 
 @app.post("/api/routing/suppliers", response_model=list[schemas.Supplier])
-def geocode_address(ids: list[int], db: Session = Depends(get_db)):
+def create_supplier_route(ids: list[int], db: Session = Depends(get_db)):
     supplier_coordinates = [
         (id, tsp_solver.Coordinate(address.lat, address.lon))
         for id in ids
@@ -114,7 +114,7 @@ def geocode_address(ids: list[int], db: Session = Depends(get_db)):
 
 
 @app.post("/api/routing/customers", response_model=list[schemas.Customer])
-def geocode_address(ids: list[int], db: Session = Depends(get_db)):
+def create_customer_route(ids: list[int], db: Session = Depends(get_db)):
     supplier_coordinates = [
         (id, tsp_solver.Coordinate(address.lat, address.lon))
         for id in ids
