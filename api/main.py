@@ -102,23 +102,34 @@ def delete_supplier(supplier_id: int, db: Session = Depends(get_db)):
     crud.delete_supplier(db=db, supplier_id=supplier_id)
 
 
-@app.post("/api/routing/suppliers", response_model=list[schemas.Supplier])
-def create_supplier_route(ids: list[int], db: Session = Depends(get_db)):
-    supplier_coordinates = [
+@app.post("/api/routing/solver", response_model=list[schemas.Supplier])
+def get_best_route(route: schemas.RouteSolverRequest, db: Session = Depends(get_db)):
+    get_entity_details = crud.get_supplier if route.type == "suppliers" else crud.get_customer
+    coordinates = [
         (id, tsp_solver.Coordinate(address.lat, address.lon))
-        for id in ids
-        if (address := crud.get_supplier(db, id).address) is not None
+        for id in route.nodes
+        if (address := get_entity_details(db, id).address) is not None
     ]
-    route = tsp_solver.get_best_route(coordinates=[e[1] for e in supplier_coordinates])
-    return [crud.get_supplier(db=db, supplier_id=supplier_coordinates[i][0]) for i in route]
+    route = tsp_solver.get_best_route(coordinates=[e[1] for e in coordinates])
+    return [get_entity_details(db, coordinates[i][0]) for i in route]
 
 
-@app.post("/api/routing/customers", response_model=list[schemas.Customer])
-def create_customer_route(ids: list[int], db: Session = Depends(get_db)):
-    customer_coordinates = [
-        (id, tsp_solver.Coordinate(address.lat, address.lon))
-        for id in ids
-        if (address := crud.get_customer(db, id).address) is not None
-    ]
-    route = tsp_solver.get_best_route(coordinates=[e[1] for e in customer_coordinates])
-    return [crud.get_customer(db=db, customer_id=customer_coordinates[i][0]) for i in route]
+@app.post("/api/routing/routes", response_model=int, status_code=201)
+def create_route(route: schemas.RouteCreate, db: Session = Depends(get_db)):
+    return crud.create_route(db=db, route=route)
+
+
+@app.get("/api/routing/routes/{route_id}", response_model=schemas.Route)
+def read_route(route_id: int, db: Session = Depends(get_db)):
+    db_route = crud.get_route(db=db, route_id=route_id)
+    if db_route is None:
+        raise HTTPException(status_code=404, detail="Route not found")
+
+    get_entity_details = crud.get_supplier if db_route.type == 'suppliers' else crud.get_customer
+    return schemas.Route(
+        id=db_route.id,
+        name=db_route.name,
+        type=db_route.type,
+        nodes=[get_entity_details(db, node.entity_id) for node in db_route.nodes],
+        timestamp=db_route.timestamp
+    )

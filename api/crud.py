@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import select
+from typing import Literal
 
 from . import models, schemas
 from .services import geocoder
@@ -174,3 +175,27 @@ def delete_supplier(db: Session, supplier_id: int) -> None:
         if not db_address.customers and not len(db_address.suppliers) > 1:
             db.delete(db_address)
     db.commit()
+
+
+def create_route(db: Session, route: schemas.RouteCreate) -> int:
+    db_route = models.Route(name=route.name, type=route.type)
+    db.add(db_route)
+    db.commit()
+
+    prev_node = None
+    for node in route.nodes:
+        db_node = models.RouteNode(
+            route_id=db_route.id,
+            entity_id=node,
+            prev=prev_node
+        )
+        db.add(db_node)
+        db.commit()
+        prev_node = db_node.id
+    db.commit()
+    return db_route.id
+
+
+def get_route(db: Session, route_id: int) -> models.Route | None:
+
+    return db.get(models.Route, route_id)
