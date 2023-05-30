@@ -5,6 +5,7 @@ import CustomersPage from './pages/CustomersPage';
 import SuppliersPage from './pages/SuppliersPage';
 import TafelApiProvider from './contexts/ApiProvider';
 import { ToastContextProvider } from './contexts/ToastContext';
+import RoutingPage from './pages/RoutingPage';
 
 
 function App() {
@@ -15,7 +16,8 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/suppliers" element={<SuppliersPage />} />
-            <Route path="/Customers" element={<CustomersPage />} />
+            <Route path="/customers" element={<CustomersPage />} />
+            <Route path="/routing" element={<RoutingPage />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </ToastContextProvider>

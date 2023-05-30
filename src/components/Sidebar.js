@@ -9,6 +9,7 @@ export default function Sidebar() {
         ['Home', '/', <FontAwesomeIcon icon={icon({name: 'house'})} className='w-5 mr-3 text-gray-600'/>],
         ['Customers', '/customers', <FontAwesomeIcon icon={icon({name: 'users'})} className='w-5 mr-3 text-gray-600'/>],
         ['Suppliers', '/suppliers', <FontAwesomeIcon icon={icon({name: 'boxes-stacked'})} className='w-5 mr-3 text-gray-600'/>],
+        ['Routing', '/routing', <FontAwesomeIcon icon={icon({name: 'route'})} className='w-5 mr-3 text-gray-600'/>],
     ]
     return (
         <aside id="default-sidebar" className="fixed top-0 left-0 z-60 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
