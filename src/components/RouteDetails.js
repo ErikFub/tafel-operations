@@ -36,7 +36,7 @@ export default function RouteDetails({ data }) {
                                         <option value="email">Email</option>
                                     </select>
                                     <input type="text" className="border-x-0 border-y-gray-300 w-3/5"></input>
-                                    <button className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500 focus:border-blue-500 block w-1/5 p-2.5 flex">
+                                    <button className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500 focus:border-blue-500 w-1/5 p-2.5 flex">
                                         <FontAwesomeIcon icon={icon({name: 'paper-plane'})} className='mr-1 p-0.5 text-gray-600' />
                                         <p>Send</p>
                                     </button>
