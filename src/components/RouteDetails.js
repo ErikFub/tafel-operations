@@ -1,4 +1,5 @@
 import Map from "./Map";
+import RouteNodesTable from "./RouteNodesTable";
 
 
 export default function RouteDetails({ data }) {
@@ -16,17 +17,21 @@ export default function RouteDetails({ data }) {
 
 
     return (
-        <div className="rounded-lg bg-white shadow px-5 py-3 grid grid-cols-2 gap-4">
-            <div>
-                <h1 className="text-xl font-bold mb-3">{data.name}</h1>
-                <h3>{data.timestamp}</h3>
-                <div className="h-64">
-                    Send to phone placeholder
+        <div className="rounded-lg bg-white shadow px-5 py-3 ">
+            <div className="grid grid-cols-2 gap-4">
+                <div>
+                    <h1 className="text-xl font-bold mb-3">{data.name}</h1>
+                    <h3>{data.timestamp}</h3>
+                    <div className="h-64">
+                        Send to phone placeholder
+                    </div>
+                </div>
+                <div>
+                    <Map lat={centerLat} lon={centerLon} places={data.nodes.map(node => node.address)} />
                 </div>
             </div>
-            <div>
-                <Map lat={centerLat} lon={centerLon} places={data.nodes.map(node => node.address)} />
-            </div>
+            <h3 className="text-base font-bold text-gray-500 tracking-wide w-full mt-4 mb-2 ml-2">{`Route ${data.type}`}</h3>
+            <RouteNodesTable nodes={data.nodes} nodeType={data.type} />
         </div>
     )
 }
