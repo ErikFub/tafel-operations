@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useTafelApi } from "../contexts/ApiProvider";
 import Spinner from "../components/Spinner";
 import RouteDetails from "../components/RouteDetails";
+import BackButton from "../components/BackButton";
 
 
 export default function RouteDetailsPage() {
@@ -29,6 +30,7 @@ export default function RouteDetailsPage() {
 
   return (
     <Body sidebar>
+        <BackButton />
         {data === undefined ?
           <Spinner />
         :
