@@ -61,12 +61,19 @@ export default function NewRouteModal({ setShowModal }) {
                 addToast({text: "Name cannot be empty", type: 'error'})
                 return
             }
-        
+
+            // Get optimal route
+            const solverResponse = await api.post('/routing/solver', {"type": routeType, "nodes": selectedNodes});
+            if (!solverResponse.ok) {
+                addToast({text: "Could not retrieve optimal route and aborted route creation", type: 'error'})
+                return
+            }
+
             // Construct request body
             const postBody = {
                 "name": formJson['name'],
                 "type": routeType,
-                "nodes": selectedNodes
+                "nodes": solverResponse.body
             }
 
             // Post to server
