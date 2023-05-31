@@ -18,12 +18,12 @@ export default function NewRouteNodesTable({ nodes, nodeType, handleCheckboxChan
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-fixed">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" class="p-4 w-1/6">
+                        <th scope="col" class="p-4 w-5">
                         </th>
-                        <th scope="col" class="px-6 py-3 w-2/6">
+                        <th scope="col" class="px-6 py-3">
                             Name
                         </th>
-                        <th scope="col" class="px-6 py-3 w-3/6">
+                        <th scope="col" class="px-6 py-3 w-7/12">
                             Address
                         </th>
                     </tr>
