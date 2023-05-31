@@ -90,20 +90,23 @@ export default function NewRouteModal({ setShowModal }) {
         })();
     }
     return (
-        <Modal setShowModal={setShowModal}>
-            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Create new route</h3>
-            <RouteTypeSelector routeType={routeType} setRouteType={setRouteType}/>
-            {routeType !== "" &&
-            <form class="space-y-6" onSubmit={handleCreate}>
-                <FormInput label={"Name"} type={"text"} required autofocus={true} />
-                {(availableNodes !== undefined && availableNodes !== null)  &&
-                <>
-                    <NewRouteNodesTable nodes={availableNodes} nodeType={routeType} handleCheckboxChange={handleCheckboxChange} />
-                    <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create Route</button>
-                </>
+        <div className="w-full">
+            <Modal setShowModal={setShowModal}>
+                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Create new route</h3>
+                <RouteTypeSelector routeType={routeType} setRouteType={setRouteType}/>
+                {routeType !== "" &&
+                <form class="mt-5" onSubmit={handleCreate}>
+                    <FormInput label={"Name"} type={"text"} required autofocus={true} />
+                    {(availableNodes !== undefined && availableNodes !== null)  &&
+                    <>
+                        <p className="mb-2 mt-6 text-sm font-medium text-gray-900 dark:text-white">{`Add ${routeType}`}</p>
+                        <NewRouteNodesTable nodes={availableNodes} nodeType={routeType} handleCheckboxChange={handleCheckboxChange} />
+                        <button type="submit" className="w-full mt-6 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create Route</button>
+                    </>
+                    }
+                </form>
                 }
-            </form>
-            }
-        </Modal>
+            </Modal>
+        </div>
     );
 };
