@@ -28,7 +28,7 @@ export default function RouteDetails({ data }) {
                     <h3 className="text-base font-bold text-gray-500">{`Created ${date.toISOString().split('T')[0]}`}</h3>
                     <div className="h-64 pt-20 w-full relative">
                         <div className="absolute bottom-0 w-full">
-                            <p className="text-sm font-bold text-gray-700 mb-1 ml-1">Send Google Maps link to</p>
+                            <p className="text-sm font-semibold text-gray-700 mb-1 ml-1">Send Google Maps link to</p>
                             <form onSubmit={e => {e.preventDefault();}} className="w-full">
                                 <div className="flex">
                                     <select id="device" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-1/5 p-2.5">
