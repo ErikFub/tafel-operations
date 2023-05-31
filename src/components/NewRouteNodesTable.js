@@ -12,7 +12,7 @@ export default function NewRouteNodesTable({ nodes, nodeType, handleCheckboxChan
     // Adapted from https://flowbite.com/docs/components/tables/#table-search
     return (
         <div class="relative overflow-x-hidden shadow-md sm:rounded-lg">
-            <div class="pb-0 bg-white dark:bg-gray-900">
+            <div class="pb-0 bg-gray-50 dark:bg-gray-900">
                 <SearchBar searchText={searchText} onSearchTextChange={setSearchText} />
             </div>
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-fixed">
