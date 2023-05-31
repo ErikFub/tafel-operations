@@ -102,7 +102,7 @@ def delete_supplier(supplier_id: int, db: Session = Depends(get_db)):
     crud.delete_supplier(db=db, supplier_id=supplier_id)
 
 
-@app.post("/api/routing/solver", response_model=list[schemas.Supplier])
+@app.post("/api/routing/solver", response_model=list[int])
 def get_best_route(route: schemas.RouteSolverRequest, db: Session = Depends(get_db)):
     get_entity_details = crud.get_supplier if route.type == "suppliers" else crud.get_customer
     coordinates = [
@@ -111,7 +111,7 @@ def get_best_route(route: schemas.RouteSolverRequest, db: Session = Depends(get_
         if (address := get_entity_details(db, id).address) is not None
     ]
     route = tsp_solver.get_best_route(coordinates=[e[1] for e in coordinates])
-    return [get_entity_details(db, coordinates[i][0]) for i in route]
+    return [coordinates[i][0] for i in route]
 
 
 @app.post("/api/routing/routes", response_model=int, status_code=201)
