@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Body from "../components/Body";
 import ListHeader from "../components/ListHeader";
-import NewRouteButton from "../components/NewRouteButton";
 import NewRouteModal from "../components/NewRouteModal";
 import RoutesTable from "../components/RoutesTable";
 import { useTafelApi } from "../contexts/ApiProvider";
@@ -29,8 +28,7 @@ export default function RoutingPage() {
 
     return (
         <Body sidebar>
-            <NewRouteButton setShowNewModal={setShowNewModal}/>
-            <ListHeader title={"All Routes"} />
+            <ListHeader title={"All Routes"} newButton setShowNewModal={setShowNewModal} />
             {routes === undefined ? 
                <Spinner />
             :
