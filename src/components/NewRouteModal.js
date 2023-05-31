@@ -61,6 +61,10 @@ export default function NewRouteModal({ setShowModal }) {
                 addToast({text: "Name cannot be empty", type: 'error'})
                 return
             }
+            if (selectedNodes.length < 2) {
+                addToast({text: "Route must include at least two nodes", type: 'error'})
+                return
+            }
 
             // Get optimal route
             const solverResponse = await api.post('/routing/solver', {"type": routeType, "nodes": selectedNodes});
