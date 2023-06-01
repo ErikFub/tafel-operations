@@ -1,6 +1,9 @@
 import FormInput from "./FormInput";
 
 export default function FormAddressSection({ defaultValues }) {
+    if (defaultValues === undefined) {
+        defaultValues = {}
+    }
     return (
         <>
             <FormInput label={"Street"} type={"text"} defaultValue={defaultValues.street} />
