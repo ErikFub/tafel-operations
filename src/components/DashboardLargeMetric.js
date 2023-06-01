@@ -33,7 +33,7 @@ export default function DashboardLargeMetric({ url, description, icon, accentCol
                 <div className={`text-${accentColor}-700 text-2xl font-bold`}>
                     {metric !== undefined ? metric : <Spinner />}
                 </div>
-                <div className={`text-${accentColor}-500 text-md uppercase font-bold`}>
+                <div className={`text-${accentColor}-500 text-md font-semibold`}>
                     {description}
                 </div>
             </div>
