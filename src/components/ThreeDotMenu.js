@@ -7,16 +7,18 @@ export default function ThreeDotMenu({ children }) {
     const [showMenu, setShowMenu] = useState(false)
 
     return (
-        <div>
+        <div className="flex justify-center">
             <ThreeDotMenuButton handleClick={() => setShowMenu(!showMenu)}/>
 
             {showMenu && 
                 <>
                     <div className='all-screen' onClick={() => setShowMenu(false)}></div>
-                    <div className="absolute right-4">
-                        <MenuDropdown>
-                            {children}
-                        </MenuDropdown>
+                    <div className="relative">
+                        <div className="absolute top-8 right-0">
+                            <MenuDropdown>
+                                {children}
+                            </MenuDropdown>
+                        </div>
                     </div>
                 </>
             }
