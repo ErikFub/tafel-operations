@@ -153,3 +153,26 @@ def read_routes(db: Session = Depends(get_db)):
         )
         routes.append(route)
     return routes
+
+
+@app.get("/api/metrics/customers/count", response_model=int)
+def read_customer_count(db: Session = Depends(get_db)):
+    return crud.get_count(db=db, model=models.Customer)
+
+
+@app.get("/api/metrics/suppliers/count", response_model=int)
+def read_customer_count(db: Session = Depends(get_db)):
+    return crud.get_count(db=db, model=models.Supplier)
+
+
+@app.get("/api/metrics/routes/count", response_model=int)
+def read_customer_count(db: Session = Depends(get_db)):
+    return crud.get_count(db=db, model=models.Route)
+
+
+@app.get("/api/metrics/routes/avg-nodes", response_model=float)
+def read_customer_count(db: Session = Depends(get_db)):
+    try:
+        return crud.get_count(db=db, model=models.RouteNode) / crud.get_count(db=db, model=models.Route)
+    except ZeroDivisionError:
+        return 0.0

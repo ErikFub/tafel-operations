@@ -1,6 +1,5 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import select
-from typing import Literal
+from sqlalchemy import select, func
 
 from . import models, schemas
 from .services import geocoder
@@ -202,3 +201,7 @@ def get_route(db: Session, route_id: int) -> models.Route | None:
 
 def get_routes(db: Session) -> list[models.Route]:
     return db.scalars(select(models.Route)).all()
+
+
+def get_count(db: Session, model) -> int:
+    return db.scalar(select(func.count()).select_from(model))
