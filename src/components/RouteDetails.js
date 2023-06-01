@@ -1,4 +1,4 @@
-import Map from "./Map";
+import RouteMap from "./RouteMap";
 import RouteNodesTable from "./RouteNodesTable";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
@@ -46,7 +46,7 @@ export default function RouteDetails({ data }) {
                     </div>
                 </div>
                 <div>
-                    <Map lat={centerLat} lon={centerLon} places={data.nodes.map(node => node.address)} />
+                    <RouteMap lat={centerLat} lon={centerLon} places={data.nodes.map(node => node.address)} />
                 </div>
             </div>
             <hr class="h-px my-5 bg-gray-200 border-0 dark:bg-gray-700"></hr>

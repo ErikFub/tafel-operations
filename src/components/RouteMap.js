@@ -46,7 +46,7 @@ function MapDirectionsRenderer({ places, travelMode }) {
 }
 
 
-export default function Map({ lat, lon, places }) {
+export default function RouteMap({ lat, lon, places }) {
     const center = useMemo(() => ({ lat: lat, lng: lon}), [lat, lon])
     const { isLoaded } = useLoadScript({googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY})
 
