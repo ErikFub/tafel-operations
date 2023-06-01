@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 
-export default function Sidebar() {
+export default function Sidebar({ show: showInNarrow }) {
     // Adapted from https://flowbite.com/docs/components/sidebar/
     let navigation = [
         ['Home', '/', <FontAwesomeIcon icon={icon({name: 'house'})} className='w-5 mr-3 text-gray-600'/>],
@@ -12,7 +12,7 @@ export default function Sidebar() {
         ['Routing', '/routing', <FontAwesomeIcon icon={icon({name: 'route'})} className='w-5 mr-3 text-gray-600'/>],
     ]
     return (
-        <aside id="default-sidebar" className="fixed top-0 left-0 z-60 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+        <aside id="default-sidebar" className={`fixed top-0 left-0 z-50 w-64 h-screen transition-transform ${!showInNarrow ? "-translate-x-full sm:translate-x-0" : ""}`} aria-label="Sidebar">
             <div className="h-full px-3 py-4 overflow-y-auto bg-white shadow dark:bg-gray-800">
                 <a href="/" className="flex items-center pl-2.5 mb-5">
                     <img src="https://www.tafel.de/fileadmin/media/Ueber_uns/Aktuelle_Meldungen/2019/2019-05-13_Tafel-App.png" className="h-6 mr-3 sm:h-7" alt="Tafel Logo" />
