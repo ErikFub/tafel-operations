@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import Body from "../components/Body";
 import SupplierList from '../components/SupplierList';
 import Spinner from '../components/Spinner';
@@ -6,10 +6,11 @@ import { useTafelApi } from '../contexts/ApiProvider';
 import ListHeader from '../components/ListHeader';
 import NewSupplierModal from '../components/NewSupplierModal';
 import EditSupplierModal from '../components/EditSupplierModal';
+import itemListReducer from '../reducers/itemListReducer';
 
 
 export default function SuppliersPage() {
-    const [suppliers, setSuppliers] = useState()
+    const [suppliers, dispatch] = useReducer(itemListReducer)
     const [showNewModal, setShowNewModal] = useState(false)
     const [showEditModal, setShowEditModal] = useState(false)  // false if not shown, int (ID of supplier to be edited) if should be shown
     const [searchText, setSearchText] = useState('')
@@ -21,38 +22,39 @@ export default function SuppliersPage() {
         (async () => {
             const response = await api.get('/suppliers');
             if (response.ok) {
-                setSuppliers(response.body);
+                dispatch({
+                  type: "data_fetched_success",
+                  items: response.body
+                });
             }
             else {
-                setSuppliers(null);
+                dispatch({
+                  type: "data_fetched_failure"
+                });
             }
         })();
       }, [api]);
 
-      const handleRemoveSupplier = (supplierId) => {
-        setSuppliers((suppliers) => {
-          // Create a new array without the item to remove
-          let updatedList = [...suppliers];
-          updatedList = suppliers.filter((supplier) => supplier.id !== supplierId);
-          return updatedList;
-        });
-      };
+    function handleRemoveSupplier(supplierId) {
+        dispatch({
+			type: 'removed',
+			id: supplierId
+		})
+    }
 
-      const handleAddSupplier = (supplier) => {
-        setSuppliers((suppliers) => {
-          // Create a new array without the item to remove
-          let updatedList = [...suppliers, supplier];
-          return updatedList;
-        });
-      };
+    function handleAddSupplier(supplier) {
+		dispatch({
+			type: 'added',
+			item: supplier
+		})
+    };
 
-      const handleUpdateSupplier = (supplier) => {
-        setSuppliers((suppliers) => {
-          // Create a new array without the item to remove
-          let updatedList = suppliers.map(supplierElement => supplierElement.id === supplier.id ? supplier : supplierElement);
-          return updatedList;
-        });
-      };
+    function handleUpdateSupplier(supplier) {
+        dispatch({
+			type: 'updated',
+			item: supplier
+		})
+    };
 
     return (
         <Body sidebar>

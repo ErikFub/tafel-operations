@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import Body from "../components/Body";
 import CustomerList from "../components/CustomerList"
 import Spinner from '../components/Spinner';
@@ -6,10 +6,11 @@ import { useTafelApi } from '../contexts/ApiProvider';
 import ListHeader from '../components/ListHeader';
 import NewCustomerModal from '../components/NewCustomerModal';
 import EditCustomerModal from '../components/EditCustomerModal';
+import itemListReducer from '../reducers/itemListReducer';
 
 
 export default function CustomersPage() {
-    const [customers, setCustomers] = useState()
+    const [customers, dispatch] = useReducer(itemListReducer)
     const [showNewModal, setShowNewModal] = useState(false)
     const [showEditModal, setShowEditModal] = useState(false)  // false if not shown, int (ID of customer to be edited) if should be shown
     const [searchText, setSearchText] = useState('')
@@ -21,38 +22,39 @@ export default function CustomersPage() {
         (async () => {
             const response = await api.get('/customers');
             if (response.ok) {
-                setCustomers(response.body);
+                dispatch({
+                  type: "data_fetched_success",
+                  items: response.body
+                });
             }
             else {
-                setCustomers(null);
+                dispatch({
+                  type: "data_fetched_failure"
+                });
             }
         })();
       }, [api]);
 
-      const handleRemoveCustomer = (customerId) => {
-        setCustomers((customers) => {
-          // Create a new array without the item to remove
-          let updatedList = [...customers];
-          updatedList = customers.filter((customer) => customer.id !== customerId);
-          return updatedList;
-        });
-      };
+    function handleRemoveCustomer(customerId) {
+        dispatch({
+			type: 'removed',
+			id: customerId
+		})
+    }
 
-      const handleAddCustomer = (customer) => {
-        setCustomers((customers) => {
-          // Create a new array without the item to remove
-          let updatedList = [...customers, customer];
-          return updatedList;
-        });
-      };
+    function handleAddCustomer(customer) {
+		dispatch({
+			type: 'added',
+			item: customer
+		})
+    };
 
-      const handleUpdateCustomer = (customer) => {
-        setCustomers((customers) => {
-          // Create a new array without the item to remove
-          let updatedList = customers.map(customerElement => customerElement.id === customer.id ? customer : customerElement);
-          return updatedList;
-        });
-      };
+    function handleUpdateCustomer(customer) {
+        dispatch({
+			type: 'updated',
+			item: customer
+		})
+    };
 
     return (
         <Body sidebar>
