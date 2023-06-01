@@ -20,6 +20,12 @@ export default function RouteDetails({ data }) {
     // Parse date
     const date = new Date(Date.parse(data.timestamp))
 
+    // Construct route url
+    let routeUrl = "https://www.google.com/maps/dir"
+    for (const node of data.nodes) {
+        routeUrl += `/${node.address.street}, ${node.address.zip} ${node.address.city}, ${node.address.country}`
+    }
+
     return (
         <div className="rounded-lg bg-white shadow px-5 py-3 ">
             <div className="grid grid-cols-2 gap-4">
@@ -36,7 +42,7 @@ export default function RouteDetails({ data }) {
                                         <option value="email">Email</option>
                                     </select>
                                     <input type="text" className="border-x-0 border-y-gray-300 w-3/5"></input>
-                                    <button className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500 focus:border-blue-500 w-1/5 p-2.5 flex">
+                                    <button onClick={() => window.open(routeUrl, "_blank")} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500 focus:border-blue-500 w-1/5 p-2.5 flex">
                                         <FontAwesomeIcon icon={icon({name: 'paper-plane'})} className='mr-1 p-0.5 text-gray-600' />
                                         <p>Send</p>
                                     </button>
