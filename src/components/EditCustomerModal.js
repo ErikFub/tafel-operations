@@ -2,6 +2,7 @@ import Modal from "./Modal";
 import FormInput from "./FormInput";
 import { useTafelApi } from "../contexts/ApiProvider";
 import { useToastContext } from "../contexts/ToastContext";
+import FormAddressSection from "./FormAddressSection";
 
 export default function EditCustomerModal({ setShowModal, customers, customerId, handleUpdateCustomer }) {
     const api = useTafelApi();
@@ -66,10 +67,7 @@ export default function EditCustomerModal({ setShowModal, customers, customerId,
             <form class="space-y-6" onSubmit={handleUpdate}>
                 <FormInput label={"First Name"} type={"text"} required autofocus={true} defaultValue={customer.first_name} />
                 <FormInput label={"Last Name"} type={"text"} required defaultValue={customer.last_name} />
-                <FormInput label={"Street"} type={"text"} defaultValue={customer.address === null ? null: customer.address.street} />
-                <FormInput label={"ZIP"} type={"text"} defaultValue={customer.address === null ? null: customer.address.zip} />
-                <FormInput label={"City"} type={"text"} defaultValue={customer.address === null ? null: customer.address.city} />
-                <FormInput label={"Country"} type={"text"} placeholder={'DE'} defaultValue={customer.address === null ? null: customer.address.country} />
+                <FormAddressSection defaultValues={{street: customer.address.street, zip: customer.address.zip, city: customer.address.city, country: customer.address.country}}/>
                 <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     Save changes
                 </button>
