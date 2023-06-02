@@ -1,70 +1,40 @@
-# Getting Started with Create React App
+# Tafel Operations App
+*This project was develop as final project for the [CS50 Introduction to Computer Science](https://cs50.harvard.edu/x/2023/) course.*
+## Motivation
+The German NGO *Tafel Deutschland* collects food close to the best-before-date from supermarkets and redistributes it to people in need. Both when collecting the food from the suppliers and when delivering it to customers, couriers usually face one major problem:
+They are given a list of 10 to 15 places to visit but do not know which route to take. While for experienced taxi drivers it might be a no-brainer to construct a (near) optimal route from a list of addresses, especially newbies tend to spend a lot of time on either constructing the best route or following an inefficient route without planning.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Tafel Operations App aims at solving this problem. It provides a simple interface to manage customers and suppliers with their respective addresses and gives the opportunity to create the optimal route with a couple of clicks. The created route can then be saved to be reused and can also be sent as a GoogleMaps link to the device of the driver. Thereby, drivers are ready to depart within a few seconds.
 
-## Available Scripts
+## Setup
+To get the app running locally, run the frontend, API, and database in Docker:
 
-In the project directory, you can run:
+1. Make sure you have the [Docker desktop client](https://www.docker.com/products/docker-desktop/) installed and running. 
 
-### `npm start`
+2. Pull the latest Postgres image by running
+    ```sh
+    docker pull postgres
+    ```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+3. `cd` in the cloned directory and build the containers for the web app by running
+    ```sh
+    docker-compose up
+    ```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+4. You should now see the `tafel-operations` container running in Docker.
 
-### `npm test`
+5. You can reach the application through `http://localhost:3000/` in your browser.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Tech stack
+### Frontend
+- React.js
+- HTML
+- Tailwind CSS
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### API
+- FastAPI (Python)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Backend
+- PostgreSQL
+- SQLAlchemy ORM (Python)
