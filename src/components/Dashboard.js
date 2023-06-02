@@ -34,16 +34,23 @@ export default function Dashboard() {
 
 
     // Calc map center
-    const allLat = places.map(place => place.address.lat)
-    const latMin = Math.min(...allLat)
-    const latMax = Math.max(...allLat)
+    let centerLat;
+    let centerLon;
+    if (places.length) {
+        const allLat = places.map(place => place.address.lat)
+        const latMin = Math.min(...allLat)
+        const latMax = Math.max(...allLat)
 
-    const allLon = places.map(place => place.address.lon)
-    const lonMin = Math.min(...allLon)
-    const lonMax = Math.max(...allLon)
+        const allLon = places.map(place => place.address.lon)
+        const lonMin = Math.min(...allLon)
+        const lonMax = Math.max(...allLon)
 
-    const centerLat = (latMin + latMax) / 2
-    const centerLon = (lonMin + lonMax) / 2
+        centerLat = (latMin + latMax) / 2
+        centerLon = (lonMin + lonMax) / 2
+    } else  {
+        centerLat = 0
+        centerLon = 0
+    }
 
     return (
         <>
@@ -78,7 +85,7 @@ export default function Dashboard() {
                     </DashboardItem>
                 </div>
                 <div className="w-full">
-                    <MarkerMap lat={centerLat} lon={centerLon} places={places} />
+                    {places !== undefined && <MarkerMap lat={centerLat} lon={centerLon} places={places} />}
                 </div>
             </div>
         </>
