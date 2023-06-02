@@ -150,7 +150,7 @@ def read_route(route_id: int, db: Session = Depends(get_db)):
         id=db_route.id,
         name=db_route.name,
         type=db_route.type,
-        nodes=[get_entity_details(db, node.entity_id) for node in db_route.nodes],
+        nodes=[get_entity_details(db, node.entity_id) for node in nodes_ordered(db_route.nodes)],
         timestamp=db_route.timestamp
     )
 
