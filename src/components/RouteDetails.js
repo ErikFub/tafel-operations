@@ -37,12 +37,12 @@ export default function RouteDetails({ data }) {
                             <p className="text-sm font-semibold text-gray-700 mb-1 ml-1">Send Google Maps link to</p>
                             <form onSubmit={e => {e.preventDefault();}} className="w-full">
                                 <div className="flex">
-                                    <select id="device" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-1/5 p-2.5">
+                                    <select id="device" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm text-center rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-1/5 p-2.5">
                                         <option selected value="phone">Phone</option>
                                         <option value="email">Email</option>
                                     </select>
                                     <input type="text" className="border-x-0 border-y-gray-300 w-3/5"></input>
-                                    <button onClick={() => window.open(routeUrl, "_blank")} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500 focus:border-blue-500 w-1/5 p-2.5 flex">
+                                    <button onClick={() => window.open(routeUrl, "_blank")} className="bg-gray-50 border border-gray-300 text-gray-900 justify-center text-sm rounded-r-lg focus:ring-blue-500 focus:border-blue-500 w-1/5 p-2.5 flex">
                                         <FontAwesomeIcon icon={icon({name: 'paper-plane'})} className='mr-1 p-0.5 text-gray-600' />
                                         <p>Send</p>
                                     </button>
