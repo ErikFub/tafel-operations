@@ -22,7 +22,7 @@ export default function MarkerMap({ lat, lon, places }) {
                     }}
                 >
                     {places.map(place => (
-                        <MarkerF position={{lat: place.address.lat, lng: place.address.lon}} />
+                        <MarkerF key={place.id + place.type} position={{lat: place.address.lat, lng: place.address.lon}} />
                     ))}
                 </GoogleMap>
             </>

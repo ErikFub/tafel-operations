@@ -18,7 +18,7 @@ export default function RouteNodesTable({ nodes, nodeType }) {
                 </thead>
                 <tbody>
                     {nodes.map((node, index) =>
-                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <tr key={node.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td className="w-4 px-6 py-4 font-semibold">
                             {String.fromCharCode(index+65)}
                         </td>
