@@ -30,7 +30,7 @@ export default function SupplierItem({ supplier, handleRemoveSupplier, setShowEd
         })();
     }
     return (
-        <li id={supplier.id} class="p-3 columns-2 flex">
+        <li id={supplier.id} className="p-3 columns-2 flex">
             <div className="w-full content-center grid">
                 <p className="text-base font-bold">
                     {supplier.name}

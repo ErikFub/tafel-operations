@@ -24,7 +24,7 @@ export default function ListHeader({ title, newButton, setShowNewModal, searchBa
                 }
 
                 {(newButton) ? 
-                <button onClick={() => setShowNewModal(true)} type="button" class="text-white bg-[#FF9119] hover:bg-[#FF9119]/80 focus:ring-4 focus:outline-none focus:ring-[#FF9119]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center dark:hover:bg-[#FF9119]/80 dark:focus:ring-[#FF9119]/40">
+                <button onClick={() => setShowNewModal(true)} type="button" className="text-white bg-[#FF9119] hover:bg-[#FF9119]/80 focus:ring-4 focus:outline-none focus:ring-[#FF9119]/50 font-medium rounded-lg text-sm px-3.5 py-2 text-center inline-flex items-center dark:hover:bg-[#FF9119]/80 dark:focus:ring-[#FF9119]/40">
                         <FontAwesomeIcon icon={icon({name: 'plus'})} className='mr-1' /><p className='font-bold'>New</p>
                 </button>
                 :

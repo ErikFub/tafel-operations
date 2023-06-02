@@ -64,14 +64,14 @@ export default function EditCustomerModal({ setShowModal, customers, customerId,
 
     return (
         <Modal setShowModal={setShowModal}>
-            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Edit customer</h3>
-            <form class="space-y-5" onSubmit={handleUpdate}>
+            <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">Edit customer</h3>
+            <form className="space-y-5" onSubmit={handleUpdate}>
                 <FormSectionHeader text={"General"} />
                 <FormInput label={"First Name"} type={"text"} required autofocus={true} defaultValue={customer.first_name} />
                 <FormInput label={"Last Name"} type={"text"} required defaultValue={customer.last_name} />
                 <FormSectionHeader text={"Address"} />
                 <FormAddressSection defaultValues={customer.address === null ? {} : {street: customer.address.street, zip: customer.address.zip, city: customer.address.city, country: customer.address.country}}/>
-                <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     Save changes
                 </button>
             </form>

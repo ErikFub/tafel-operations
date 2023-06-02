@@ -96,10 +96,10 @@ export default function NewRouteModal({ setShowModal }) {
     return (
         <div className="w-full">
             <Modal setShowModal={setShowModal}>
-                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Create new route</h3>
+                <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">Create new route</h3>
                 <RouteTypeSelector routeType={routeType} setRouteType={setRouteType}/>
                 {routeType !== "" &&
-                <form class="mt-5" onSubmit={handleCreate}>
+                <form className="mt-5" onSubmit={handleCreate}>
                     <FormInput label={"Name"} type={"text"} required autofocus={true} />
                     {(availableNodes !== undefined && availableNodes !== null)  &&
                     <>

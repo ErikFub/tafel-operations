@@ -63,7 +63,7 @@ export default function RouteDetails({ data }) {
                 </div>
                 {isWideScreen ? map : null}
             </div>
-            <hr class="h-px my-5 bg-gray-200 border-0 dark:bg-gray-700"></hr>
+            <hr className="h-px my-5 bg-gray-200 border-0 dark:bg-gray-700"></hr>
             <h3 className="text-base font-bold text-gray-500 tracking-wide w-full mt-3 mb-2 ml-2">{`Route ${data.type}`}</h3>
             <RouteNodesTable nodes={data.nodes} nodeType={data.type} />
         </div>

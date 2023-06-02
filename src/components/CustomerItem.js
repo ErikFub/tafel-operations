@@ -30,7 +30,7 @@ export default function CustomerItem({ customer, handleRemoveCustomer, setShowEd
     }
 
     return (
-        <li id={customer.id} class="p-3 columns-2 flex">
+        <li id={customer.id} className="p-3 columns-2 flex">
             <div className="w-full content-center grid">
                 <p className="text-base font-bold">
                     {customer.first_name} {customer.last_name}
