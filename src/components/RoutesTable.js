@@ -31,7 +31,7 @@ export default function RoutesTable({ routes }) {
                     <tr>
                         <th scope="col" className="px-6 py-3">Name</th>
                         <th scope="col" className="px-6 py-3 w-1/5">Created At</th>
-                        <th scope="col" className="px-6 py-3 w-32"># Stops</th>
+                        <th scope="col" className="px-6 py-3 w-32 hidden md:table-cell"># Stops</th>
                         <th scope="col" className="px-6 py-3 w-44">Type</th>
                     </tr>
                 </thead>
@@ -40,7 +40,7 @@ export default function RoutesTable({ routes }) {
                         <tr onClick={() => navigate(`/routing/routes/${route.id}`)} className="hover:cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td className="px-6 py-3 font-semibold">{route.name}</td>
                             <td className="px-6 py-3">{parseTimestamp(route.timestamp)}</td>
-                            <td className="px-6 py-3">{route.nodes.length}</td>
+                            <td className="px-6 py-3 hidden md:table-cell">{route.nodes.length}</td>
                             <td className="px-6 py-3"><ItemTag text={toTitleCase(route.type)} color={route.type === 'customers' ? 'green' : 'blue'} /></td>
                         </tr>
                     )}
