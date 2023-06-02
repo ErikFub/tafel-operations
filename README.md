@@ -6,7 +6,7 @@ They are given a list of 10 to 15 places to visit but do not know which route to
 
 The Tafel Operations App aims at solving this problem. It provides a simple interface to manage customers and suppliers with their respective addresses and gives the opportunity to create the optimal route with a couple of clicks. The created route can then be saved to be reused and can also be sent as a GoogleMaps link to the device of the driver. Thereby, drivers are ready to depart within a few seconds.
 
-<img src="docs/sample_route_detail.png" alt="Alt text" style="box-shadow: 0 0 10px #ccc;;">
+![alt text](docs/sample_route_detail.png)
 <sub><sup>A sample resulting route</sup></sub>
 
 ## Setup
