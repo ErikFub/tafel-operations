@@ -119,6 +119,26 @@ def create_route(route: schemas.RouteCreate, db: Session = Depends(get_db)):
     return crud.create_route(db=db, route=route)
 
 
+def get_succeeding_nodes(find_node: models.RouteNode, search_nodes: list[models.RouteNode]):
+    if not search_nodes:
+        return []
+    for i, search_node in enumerate(search_nodes):
+        if search_node.prev == find_node.id:
+            print(f"Found node {search_node.id}")
+            search_nodes.pop(i)
+            return [search_node] + get_succeeding_nodes(search_node, search_nodes)
+    else:
+        return []
+
+
+def nodes_ordered(nodes: list[models.RouteNode]) -> list[models.RouteNode]:
+    start_nodes = [n for n in nodes if n.prev is None]
+    if len(start_nodes) > 1:
+        raise Exception("Route can only have one starting node")
+    start_node = start_nodes[0]
+    return [start_node] + get_succeeding_nodes(start_node, nodes)
+
+
 @app.get("/api/routing/routes/{route_id}", response_model=schemas.Route)
 def read_route(route_id: int, db: Session = Depends(get_db)):
     db_route = crud.get_route(db=db, route_id=route_id)
@@ -148,7 +168,7 @@ def read_routes(db: Session = Depends(get_db)):
             id=db_route.id,
             name=db_route.name,
             type=db_route.type,
-            nodes=[get_entity_details(db, node.entity_id) for node in db_route.nodes],
+            nodes=[get_entity_details(db, node.entity_id) for node in nodes_ordered(db_route.nodes)],
             timestamp=db_route.timestamp
         )
         routes.append(route)
