@@ -1,20 +1,35 @@
 import Sidebar from '../components/Sidebar';
 import Content from './Content';
 import SidebarCollapsed from '../components/SidebarCollapsed';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Body({ sidebar, children }) {
-  const [showSidebarInNarrow, setShowSidebarInNarrow] = useState(false)
+	const [showSidebarInNarrow, setShowSidebarInNarrow] = useState(false)
 
-  console.log(showSidebarInNarrow)
+	const menuRef = useRef(null);
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+		if (menuRef.current && !menuRef.current.contains(event.target)) {
+			setShowSidebarInNarrow(false);
+		}
+		};
 
-  return (
-    <div>
-      {sidebar && <SidebarCollapsed onToggleSidebar={() => setShowSidebarInNarrow(!showSidebarInNarrow)} />}
-      {sidebar && <Sidebar show={showSidebarInNarrow} />}
-      <Content>
-        {children}
-      </Content>
-    </div>
-  );
+		document.addEventListener('click', handleClickOutside);
+
+		return () => {
+			document.removeEventListener('click', handleClickOutside);
+		};
+	}, []);
+
+	return (
+		<div>
+		<div ref={menuRef}>
+			{sidebar && <SidebarCollapsed onToggleSidebar={() => setShowSidebarInNarrow(!showSidebarInNarrow)} />}
+			{sidebar && <Sidebar showInNarrow={showSidebarInNarrow} onItemClick={() => setShowSidebarInNarrow(false)} />}
+		</div>
+		<Content>
+			{children}
+		</Content>
+		</div>
+	);
 }

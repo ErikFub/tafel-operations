@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 
-export default function Sidebar({ show: showInNarrow }) {
+export default function Sidebar({ showInNarrow, onItemClick }) {
     // Adapted from https://flowbite.com/docs/components/sidebar/
     let navigation = [
         ['Home', '/', <FontAwesomeIcon icon={icon({name: 'house'})} className='w-5 mr-3 text-gray-600'/>],
@@ -20,7 +20,7 @@ export default function Sidebar({ show: showInNarrow }) {
                 </a>
                 <ul className="space-y-2 font-medium">
                     {navigation.map(([title, url, ico]) => (
-                    <li key={title}>
+                    <li key={title} onClick={onItemClick}>
                         <NavLink id={title} to={url} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                             <span className="ml-3">{ico}{title}</span>
                         </NavLink>
