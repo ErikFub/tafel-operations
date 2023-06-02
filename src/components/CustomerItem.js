@@ -1,4 +1,5 @@
 import { useTafelApi } from '../contexts/ApiProvider'
+import { useItemMenuVisibilityContext } from '../contexts/ItemMenuVisibilityContext';
 import { useToastContext } from "../contexts/ToastContext"
 import DropdownItem from './DropdownItem';
 import ThreeDotMenu from './ThreeDotMenu';
@@ -8,9 +9,11 @@ import ThreeDotMenu from './ThreeDotMenu';
 export default function CustomerItem({ customer, handleRemoveCustomer, setShowEditModal }) {
     const api = useTafelApi();
     const addToast = useToastContext();
+    const setItemMenuVisibility = useItemMenuVisibilityContext().setItemMenuVisibility;
 
     const handleEdit = () => {
-        setShowEditModal(customer.id)
+        setItemMenuVisibility(null);
+        setShowEditModal(customer.id);
     }
 
     const handleDelete = () => {
@@ -40,7 +43,7 @@ export default function CustomerItem({ customer, handleRemoveCustomer, setShowEd
                     undefined
                 }
             </div>
-            <ThreeDotMenu>
+            <ThreeDotMenu id={customer.id}>
                 <DropdownItem text={'Edit'} handleClick={handleEdit} />
                 <DropdownItem text={'Delete'} handleClick={handleDelete} />
             </ThreeDotMenu>
